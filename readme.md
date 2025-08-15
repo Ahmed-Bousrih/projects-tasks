@@ -1,95 +1,122 @@
 # Projects & Tasks App
 
-A full-stack application for managing projects and tasks, built with **NestJS** (backend), **Next.js + TypeScript** (frontend), and **PostgreSQL** (database). The app supports user authentication with JWT.
+A full-stack application to manage projects and tasks, built with <strong>NestJS</strong> (backend), <strong>Next.js + TypeScript</strong> (frontend), and <strong>PostgreSQL</strong> (database). The app supports <strong>user authentication</strong> with JWT and is fully <strong>containerized with Docker</strong>.
+
+---
 
 ## Features
 
-- User registration and login
-- Dashboard showing user projects
-- Project details with tasks
-- Add new projects and tasks
-- Fully containerized with Docker
+<ul>
+  <li>User registration and login</li>
+  <li>Dashboard showing user projects</li>
+  <li>Project details with tasks</li>
+  <li>Add new projects and tasks</li>
+  <li>Fully containerized for easy deployment</li>
+</ul>
+
+---
 
 ## Technologies
 
-- **Backend:** NestJS, TypeORM, JWT, Bcrypt  
-- **Frontend:** Next.js, React, TailwindCSS, Axios  
-- **Database:** PostgreSQL  
-- **Containerization:** Docker, Docker Compose  
+<ul>
+  <li><strong>Backend:</strong> NestJS, TypeORM, JWT, Bcrypt</li>
+  <li><strong>Frontend:</strong> Next.js, React, TailwindCSS, Axios</li>
+  <li><strong>Database:</strong> PostgreSQL</li>
+  <li><strong>Containerization:</strong> Docker, Docker Compose</li>
+</ul>
+
+---
 
 ## Getting Started
 
 ### Requirements
 
-- Docker & Docker Compose installed
+<ul>
+  <li>Docker & Docker Compose installed</li>
+</ul>
 
 ### Run with Docker
 
-1. Clone the repository:
-
-```bash
-git clone https://github.com/Ahmed-Bousrih/projects-tasks.git
+<pre><code>git clone https://github.com/Ahmed-Bousrih/projects-tasks.git
 cd projects-tasks
-Start all services:
-
-bash
-Copy
-Edit
 docker-compose up --build
-Services:
+</code></pre>
 
-Service	Port
-Backend (NestJS API)	3001
-Frontend (Next.js)	3000
-Database (PostgreSQL)	5432
+### Services and Ports
 
-Environment Variables
-Create .env files for backend and frontend as needed.
+<table>
+  <tr>
+    <th>Service</th>
+    <th>Port</th>
+  </tr>
+  <tr>
+    <td>Backend (NestJS API)</td>
+    <td>3001</td>
+  </tr>
+  <tr>
+    <td>Frontend (Next.js)</td>
+    <td>3000</td>
+  </tr>
+  <tr>
+    <td>Database (PostgreSQL)</td>
+    <td>5432</td>
+  </tr>
+</table>
 
-Backend (apps/api/.env):
+---
 
-ini
-Copy
-Edit
-PORT=3001
+### Environment Variables
+
+**Backend (`apps/api/.env`):**
+
+<pre><code>PORT=3001
 DATABASE_URL=postgres://postgres:postgres@db:5432/projects_tasks
 JWT_SECRET=yourSecretKey
-Frontend (apps/web/.env):
+</code></pre>
 
-ini
-Copy
-Edit
-NEXT_PUBLIC_API_URL=http://localhost:3001
-In Docker, the frontend can also use http://api:3001 if referencing the API container directly.
+**Frontend (`apps/web/.env`):**
 
-Access
-Frontend: http://localhost:3000
+<pre><code>NEXT_PUBLIC_API_URL=http://localhost:3001
+</code></pre>
 
-API: http://localhost:3001
+<p><strong>Note:</strong> In Docker, the frontend can also use <code>http://api:3001</code> if referencing the API container directly.</p>
 
-Database
-PostgreSQL username/password: postgres/postgres
+---
 
-Database: projects_tasks
+### Access the App
 
-Tables will be automatically created by TypeORM on first run.
+<ul>
+  <li><strong>Frontend:</strong> <a href="http://localhost:3000">http://localhost:3000</a></li>
+  <li><strong>API:</strong> <a href="http://localhost:3001">http://localhost:3001</a></li>
+</ul>
 
-Development
-To run frontend or backend separately (without Docker):
+<p><strong>Database Info:</strong></p>
+<ul>
+  <li>PostgreSQL username/password: <code>postgres/postgres</code></li>
+  <li>Database: <code>projects_tasks</code></li>
+  <li>Tables will be automatically created by TypeORM on first run</li>
+</ul>
 
-Backend:
+---
 
-bash
-Copy
-Edit
-cd apps/api
+### Development (Without Docker)
+
+**Backend:**
+
+<pre><code>cd apps/api
 npm install
 npm run start:dev
-Frontend:
+</code></pre>
 
-bash
-Copy
-Edit
-cd apps/web
+**Frontend:**
+
+<pre><code>cd apps/web
 npm install
 npm run dev
+</code></pre>
+
+---
+
+## License
+
+MIT
