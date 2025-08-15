@@ -9,5 +9,6 @@ import { Project } from '../entities/project.entity';
   imports: [TypeOrmModule.forFeature([Task, Project])],
   providers: [TasksService],
   controllers: [TasksController],
+  exports: [TasksService],
 })
 export class TasksModule {}

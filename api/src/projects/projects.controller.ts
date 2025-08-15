@@ -10,6 +10,7 @@ import {
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { TasksService } from '../tasks/tasks.service';
 
 interface JwtUserPayload {
   userId: number;
@@ -22,22 +23,39 @@ interface AuthRequest {
 
 @Controller('projects')
 export class ProjectsController {
-  constructor(private readonly projectsService: ProjectsService) {}
+  constructor(
+    private readonly projectsService: ProjectsService,
+    private readonly tasksService: TasksService,
+  ) {}
 
+  // Create a new project
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() dto: CreateProjectDto, @Request() req: AuthRequest) {
-    // Just pass the JWT payload; the service will fetch the full User entity
     return this.projectsService.createProject(dto, req.user);
   }
 
+  // Fetch all projects for the logged-in user
+  @UseGuards(JwtAuthGuard)
   @Get()
-  async findAll() {
-    return this.projectsService.findAll();
+  async findByOwner(@Request() req: AuthRequest) {
+    return this.projectsService.findByOwner(req.user.userId);
   }
 
+  // Fetch a specific project by ID
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async findOne(@Param('id') id: number) {
-    return this.projectsService.findById(id);
+  async findOne(@Param('id') id: number, @Request() req: AuthRequest) {
+    const project = await this.projectsService.findById(id);
+    if (!project) return { message: 'Project not found' };
+    // (test) check if req.user.userId === project.owner.id
+    return project;
+  }
+
+  // Fetch all tasks for a specific project
+  @UseGuards(JwtAuthGuard)
+  @Get(':id/tasks')
+  getTasks(@Param('id') projectId: number) {
+    return this.tasksService.findByProjectId(+projectId);
   }
 }

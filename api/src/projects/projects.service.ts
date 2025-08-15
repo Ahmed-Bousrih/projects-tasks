@@ -23,20 +23,21 @@ export class ProjectsService {
     dto: CreateProjectDto,
     jwtUser: JwtUserPayload,
   ): Promise<Project> {
-    // Fetch full User entity based on JWT payload
     const owner = await this.userRepository.findOneOrFail({
       where: { id: jwtUser.userId },
     });
 
-    const project = this.projectRepository.create({
-      name: dto.name,
-      owner,
-    });
+    const project = this.projectRepository.create({ name: dto.name, owner });
     return this.projectRepository.save(project);
   }
 
-  async findAll(): Promise<Project[]> {
-    return this.projectRepository.find({ relations: ['owner', 'tasks'] });
+  // Fetch projects for a specific user (used by /dashboard)
+  async findByOwner(userId: number): Promise<Project[]> {
+    return this.projectRepository.find({
+      where: { owner: { id: userId } }, // query by relation
+      relations: ['owner', 'tasks'], // include tasks if needed
+      order: { createdAt: 'DESC' },
+    });
   }
 
   async findById(id: number): Promise<Project | null> {
